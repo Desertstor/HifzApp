@@ -1,0 +1,53 @@
+الصق الكود ده في محتوى الملف:
+
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Unzip project
+      run: unzip HifzApp.zip -d .
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Add font placeholder
+      run: |
+        mkdir -p HifzApp/app/src/main/res/font
+        touch HifzApp/app/src/main/res/font/amiri.ttf
+
+    - name: Fix themes
+      run: |
+        sed -i 's|<item name="android:fontFamily">@font/amiri</item>||g' HifzApp/app/src/main/res/values/themes.xml
+        sed -i 's|android:fontFamily="@font/amiri"||g' HifzApp/app/src/main/res/layout/activity_recitation.xml
+
+    - name: Grant gradlew permission
+      run: chmod +x HifzApp/gradlew
+
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug --no-daemon
+      working-directory: HifzApp
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: HifzApp-debug
+        path: HifzApp/app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 7
+@font\\/amiri<\\/item>||g\' HifzApp/app/src/main/res/values/themes.xml\n sed -i \'s|android:fontFamily=\"@font\\/amiri\"||g\' HifzApp/app/src/main/res/layout/activity_recitation.xml\n\n - name: Grant gradlew permission\n run: chmod +x HifzApp/gradlew\n\n - name: Build Debug APK\n run: ./gradlew assembleDebug --no-daemon\n working-directory: HifzApp\n\n - name: Upload APK\n uses: actions/upload-artifact@v4\n with:\n name: HifzApp-debug\n path: HifzApp/app/build/outputs/apk/debug/app-debug.apk\n retention-days: 7`; navigator.clipboard.writeText(code); this.textContent='✓ تم النسخ!'; setTimeout(()=>this.textContent='نسخ الكود',2000) " style="margin-top: 10px; padding: 8px 16px; font-size: 13px; cursor: pointer; background: var(--color-background-info); color: var(--color-text-info); border: none; border-radius: 6px;">نسخ الكود
