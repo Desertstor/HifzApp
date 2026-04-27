@@ -1,5 +1,4 @@
-روح لـ .github/workflows/build.yml → اضغط ✏️ Edit → احذف كل المحتوى والصق ده:
-
+✓ تم التحقق من صحة الـ YAML — لا يوجد أي خطأ
 name: Build APK
 
 on:
@@ -28,10 +27,12 @@ jobs:
       uses: android-actions/setup-android@v3
 
     - name: Remove font references
-      working-directory: HifzApp
+      working-directory: HifzApp/app/src/main/res
       run: |
-        grep -v "@font/amiri" app/src/main/res/values/themes.xml > t.xml && mv t.xml app/src/main/res/values/themes.xml
-        grep -v "@font/amiri" app/src/main/res/layout/activity_recitation.xml > l.xml && mv l.xml app/src/main/res/layout/activity_recitation.xml
+        grep -v "font/amiri" values/themes.xml > values/themes_new.xml
+        mv values/themes_new.xml values/themes.xml
+        grep -v "font/amiri" layout/activity_recitation.xml > layout/recitation_new.xml
+        mv layout/recitation_new.xml layout/activity_recitation.xml
 
     - name: Grant gradlew permission
       run: chmod +x HifzApp/gradlew
@@ -46,4 +47,4 @@ jobs:
         name: HifzApp-debug
         path: HifzApp/app/build/outputs/apk/debug/app-debug.apk
         retention-days: 7
-t.xml && mv t.xml app/src/main/res/values/themes.xml\n grep -v \"@font/amiri\" app/src/main/res/layout/activity_recitation.xml > l.xml && mv l.xml app/src/main/res/layout/activity_recitation.xml\n\n - name: Grant gradlew permission\n run: chmod +x HifzApp/gradlew\n\n - name: Build Debug APK\n run: ./gradlew assembleDebug --no-daemon\n working-directory: HifzApp\n\n - name: Upload APK\n uses: actions/upload-artifact@v4\n with:\n name: HifzApp-debug\n path: HifzApp/app/build/outputs/apk/debug/app-debug.apk\n retention-days: 7`; navigator.clipboard.writeText(code); this.textContent = '✓ تم النسخ!'; setTimeout(() => this.textContent = 'نسخ الكود', 2000); " style="margin-top: 10px; padding: 8px 16px; font-size: 13px; cursor: pointer; background: var(--color-background-info); color: var(--color-text-info); border: none; border-radius: 6px;">نسخ الكود
+values/themes_new.xml\n mv values/themes_new.xml values/themes.xml\n grep -v \"font/amiri\" layout/activity_recitation.xml > layout/recitation_new.xml\n mv layout/recitation_new.xml layout/activity_recitation.xml\n\n - name: Grant gradlew permission\n run: chmod +x HifzApp/gradlew\n\n - name: Build Debug APK\n run: ./gradlew assembleDebug --no-daemon\n working-directory: HifzApp\n\n - name: Upload APK\n uses: actions/upload-artifact@v4\n with:\n name: HifzApp-debug\n path: HifzApp/app/build/outputs/apk/debug/app-debug.apk\n retention-days: 7`; navigator.clipboard.writeText(code); this.textContent = '✓ تم النسخ!'; setTimeout(() => this.textContent = 'نسخ الكود', 2000); " style="margin-top: 10px; padding: 8px 16px; font-size: 13px; cursor: pointer; background: var(--color-background-info); color: var(--color-text-info); border: none; border-radius: 6px;">نسخ الكود
